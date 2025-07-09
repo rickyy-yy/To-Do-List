@@ -1,0 +1,11 @@
+1`Do Java`General`23-07-2025`false
+2`Do Maths`Important`24-07-2025`false
+3`Do SAAD`General`25-07-2025`false
+4`Do ISFT`General`25-07-2025`false
+5`Do ICS`General`25-07-2025`false
+6`Do PYP`General`25-07-2025`false
+7`Do IOOP`General`25-07-2025`false
+8`Do JAVA`General`25-07-2025`false
+9`Do SDM`General`25-07-2025`false
+10`Do SRE`General`25-07-2025`false
+11`Do CTF`General`25-07-2025`false
