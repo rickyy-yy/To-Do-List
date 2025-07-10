@@ -1,11 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Book {
-    public Dictionary<Integer,List<Task>> entries = new Hashtable<>();
+    public HashMap<Integer,List<Task>> entries = new HashMap<>();
     public int maxPageSize = 10;
 
     public Book(){
@@ -56,11 +58,14 @@ public class Book {
 
     public void fillBook(){
         try{
+            this.entries.clear();
+            this.entries.put(1, new ArrayList<Task>());
+
             File f = new File(Main.filepath);
             Scanner s = new Scanner(f);
             List<String> fileContents = new ArrayList<>();
             String[] entryDetails = new String[5];
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             formatter = formatter.withLocale(Locale.ENGLISH);
 
             while (s.hasNextLine()){
@@ -79,6 +84,43 @@ public class Book {
         }
         catch (FileNotFoundException e){
             System.out.println("Tasks.txt was not found!");
+        }
+    }
+
+    public void saveBook(){
+        try{
+            File f = new File(Main.filepath);
+            FileWriter writer = new FileWriter(Main.filepath);
+            int pageNumber = 0;
+            String temp;
+
+            for (int index : this.entries.keySet()){
+                List<Task> page = this.entries.get(index);
+                pageNumber++;
+                int lineNumber = 0;
+
+                for (Task task : page){
+                    lineNumber++;
+                    int id = task.getID();
+                    String body = task.getBody();
+                    Main.Categories category = task.getCategory();
+                    LocalDate deadline = task.getDeadline();
+                    Boolean completed = task.getCompleted();
+
+                    if (lineNumber != 1 || pageNumber != 1){
+                        temp = String.format("%n%s`%s`%s`%s`%s", id, body, category, deadline, completed);
+                    }
+                    else{
+                        temp = String.format("%s`%s`%s`%s`%s", id, body, category, deadline, completed);
+                    }
+                    writer.write(temp);
+                }
+            }
+
+            writer.close();
+        }
+        catch (IOException e){
+            System.out.println("Something went wrong saving the tasks!");
         }
     }
 }
