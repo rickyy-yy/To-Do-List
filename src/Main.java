@@ -45,7 +45,8 @@ public class Main {
                     mainMenu();
                     break;
                 case 3:
-                    // Delete tasks
+                    deleteTask();
+                    mainMenu();
                     break;
                 case 4:
                     System.exit(0);
@@ -71,6 +72,19 @@ public class Main {
         catch (IOException | SecurityException e){
             System.out.println("An error has occurred when creating Tasks.txt!");
         }
+    }
+
+    private static Boolean checkValid(String string){
+        return string.contains("`");
+    }
+
+    private static int getLastID(Book book){
+        List<Task> tasks = book.entries.get(book.entries.size());
+        if (tasks.isEmpty()){
+            return 0;
+        }
+        Task temp = tasks.getLast();
+        return temp.getID();
     }
 
     private static void viewTasks(int index){
@@ -229,18 +243,89 @@ public class Main {
         String temp = String.format("%s-%s-%s", intYear, month, day);
         deadline = LocalDate.parse(temp, formatter);
 
-        Task task = new Task(getLatestID(), body, category, deadline, false);
+        Task task = new Task(getLastID(book) + 1, body, category, deadline, false);
         book.writeToBook(task);
         book.saveBook();
+        System.out.println();
+        System.out.println("Task added successfully!");
+        System.out.println();
     }
 
-    private static Boolean checkValid(String string){
-        return string.contains("`");
-    }
+    private static void deleteTask(){
+        int deletionID;
+        int page = 1;
+        String confirm = "";
+        Scanner s = new Scanner(System.in);
 
-    private static int getLatestID(){
-        List<Task> tasks = book.entries.get(book.entries.size());
-        Task temp = tasks.getLast();
-        return temp.getID() + 1;
+        while (true){
+            try{
+                System.out.println();
+                System.out.println("=====Task Deletion Menu=====");
+                System.out.println();
+                System.out.printf("Enter task ID (1-%s): ", getLastID(book));
+
+                deletionID = s.nextInt();
+
+                if (deletionID >= 1 && deletionID <= getLastID(book)){
+                    break;
+                }
+            }
+            catch (NumberFormatException e){
+                System.out.println();
+                System.out.println("You need to enter an integer!");
+            }
+        }
+
+        for ( List<Task> tasks : book.entries.values()){
+            for (Task task : tasks){
+                if (task.getID() == deletionID){
+                    task.getSummary();
+                }
+            }
+        }
+
+        while (!confirm.equals("Y") && !confirm.equals("N")){
+            System.out.print("Do you wish to proceed? (Y/N): ");
+            confirm = s.next();
+            System.out.println();
+        }
+
+        if (confirm.equals("Y")){
+            page = (deletionID + 10) / 10;
+            List<Task> tasks = book.entries.get(page);
+            for (Task task : tasks){
+                if (task.getID() == deletionID){
+                    tasks.remove(task);
+                    break;
+                }
+            }
+            book.saveBook();
+        }
+        else{
+            System.out.println("Deletion aborted!");
+            System.out.println();
+            mainMenu();
+        }
+
+        Book tempBook = new Book();
+
+        for (List<Task> tasks : book.entries.values()){
+            for (Task task : tasks){
+                int id = getLastID(tempBook) + 1;
+                String body = task.getBody();
+                Categories category = task.getCategory();
+                LocalDate deadline = task.getDeadline();
+                Boolean completed = task.getCompleted();
+
+                Task tempTask = new Task(id, body, category, deadline, completed);
+                tempBook.writeToBook(tempTask);
+                tempBook.saveBook();
+                tempBook.fillBook();
+            }
+        }
+        book = tempBook;
+        book.saveBook();
+        System.out.println("Task deleted successfully!");
+        System.out.println();
     }
 }

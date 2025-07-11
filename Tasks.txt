@@ -1,13 +1,6 @@
-1`Do Java`General`2025-07-23`false
-2`Do Maths`Important`2025-07-24`false
-3`Do SAAD`General`2025-07-25`false
-4`Do ISFT`General`2025-07-25`false
-5`Do ICS`General`2025-07-25`false
-6`Do PYP`General`2025-07-25`false
-7`Do IOOP`General`2025-07-25`false
-8`Do JAVA`General`2025-07-25`false
-9`Do SDM`General`2025-07-25`false
-10`Do SRE`General`2025-07-25`false
-11`Do CTF`General`2025-07-25`false
-12`Nothing`General`2025-07-30`false
-13`Nothing again`Important`2025-08-31`false
+1`Do SAAD`General`2025-07-25`false
+2`Do PYP`General`2025-07-25`false
+3`Do IOOP`General`2025-07-25`false
+4`Do JAVA`General`2025-07-25`false
+5`Do SDM`General`2025-07-25`false
+6`Do SRE`General`2025-07-25`false

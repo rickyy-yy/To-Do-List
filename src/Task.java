@@ -37,6 +37,18 @@ public class Task {
         return this.completed;
     }
 
+    public void getSummary(){
+        System.out.println();
+        System.out.println("=====Task Summary=====");
+        System.out.println();
+        System.out.printf("ID: %s%n", this.id);
+        System.out.printf("Task: %s%n", this.body);
+        System.out.printf("Category: %s%n", this.category);
+        System.out.printf("Deadline: %s%n", this.deadline);
+        System.out.printf("Completed: %s%n", this.completed);
+        System.out.println();
+    }
+
     // Set methods
 
     public void setID(int id){

@@ -8,10 +8,10 @@ import java.util.*;
 
 public class Book {
     public HashMap<Integer,List<Task>> entries = new HashMap<>();
-    public int maxPageSize = 10;
+    public final int maxPageSize = 10;
 
     public Book(){
-        this.entries.put(1, new ArrayList<Task>());
+        this.entries.put(1, new ArrayList<>());
     }
 
     public Boolean isPageFull(){
